@@ -12,6 +12,8 @@ Pywal
 
 Waybar
 
+hyprlock
+
 and native aro tools for wallpapers etc hope u enjoy it
 
 the desktop has bluetooth, wifi, power and screenshot/screenrecording menus, as well as an app launcher, scrollable brightness and volume widgets (you can also use the volume slider on the bar)
