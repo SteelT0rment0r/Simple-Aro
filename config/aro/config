@@ -1,0 +1,405 @@
+# aro example config
+# copy this to ~/.config/aro/config
+#
+# everything is optional. missing keys just use the defaults from src/ui/theme.h.
+# colors accept 0xRRGGBBAA, #rrggbbaa, or just rrggbbaa. alpha is optional (defaults to ff).
+
+mod = super                 # or: alt (useful if you're running nested inside another compositor)
+focus_follows_mouse = true
+
+# prompt before quitting (default bind is super+shift+e).
+# kills all open windows if you say yes.
+confirm_quit = true
+
+# a fullscreen game that asks for it may skip vsync: lower input lag, visible tearing.
+allow_tearing = false
+
+# manual: new windows split next to the focused one (i3 style).
+# dwindle: splits follow the longer axis of the frame, spiraling automatically (Hyprland style).
+# monocle: one window at a time, filling the screen; mod+hjkl steps through
+#   them. the split layout is kept underneath and comes back when you leave.
+# scroll: windows in columns on an endless strip; the screen scrolls to the
+#   focused one and the neighbours peek in. beside a window (mod+v, or a drop
+#   at its side) makes a new column; below it (mod+s, or a drop above/below)
+#   stacks in that column. mod+ctrl+h/l change a column's width.
+# mod+v / mod+s will temporarily override either mode for the next window.
+layout = dwindle
+
+# scroll layout: a new column's share of the screen, and how much of the
+# neighbouring columns stays visible (0 = whole columns only).
+scroll_width = 0.5
+scroll_peek = 40
+# the widths mod+r steps a column through
+scroll_presets = 0.333 0.5 0.667
+
+# per-workspace layout. mod+t cycles manual, dwindle, monocle and scroll for the
+# current workspace; bind `layout, monocle` to jump straight to one.
+# workspace = 3 layout manual
+# workspace = 4 layout monocle
+
+# workspaces are created on demand. this just sets how many pills the bar
+# shows by default so it isn't empty on startup.
+workspaces = 8
+
+# === keyboard ===
+# falls back to XKB_DEFAULT_* env vars if unset.
+keyboard_layout = tr
+# keyboard_variant = nodeadkeys
+# keyboard_options = compose:ralt
+# keyboard_model =
+# keyboard_rules =
+keyboard_repeat_rate = 25      # keys per second; 0 turns repeat off
+keyboard_repeat_delay = 600    # ms before a held key repeats
+
+# === touchpad ===
+touchpad_tap = true
+touchpad_natural_scroll = true
+touchpad_disable_while_typing = true
+touchpad_speed = 0.2            # -1.0 to 1.0
+# a swipe with this many fingers changes workspace when you lift them:
+# left for the next one, right for the previous (up/down with workspace_slide = vertical;
+# then a sideways swipe on a scroll workspace moves along its columns).
+# 0 passes every gesture to apps instead. 3 to 5.
+gesture_fingers = 3
+
+# === mouse ===
+# also trackpoints. flat: the pointer moves the same however fast you go.
+mouse_accel = flat              # auto, flat or adaptive
+
+mouse_speed = -0.3
+mouse_natural_scroll = false
+
+# === laptop lid ===
+# closing the lid turns the built-in screen off while another screen is on.
+# with no other screen, the system (logind) decides, usually suspending.
+lid_switch = true
+
+# === cursor ===
+# falls back to XCURSOR_THEME / XCURSOR_SIZE if unset. apps started after
+# a change pick it up; GTK apps also read gsettings' cursor-theme.
+# cursor_theme = Adwaita
+# cursor_size = 24              # 8 to 256
+
+# === monitors ===
+# one block per screen. the name is a glob matched against the connector
+# name (e.g. HDMI-A-1) and the "make model serial" string.
+# check the logs when a screen plugs in to see what to match against:
+#   output: name="HDMI-A-1" desc="Dell Inc. DELL U2419H 7ABC123"
+monitor * {
+    enabled = auto          # defaults to on
+    scale = auto            # 2x for >192 DPI, 1x otherwise
+    position = auto         # places it to the right of existing screens
+    transform = auto        # normal orientation
+    adaptive_sync = auto    # defaults to off
+    hdr = auto              # off; on needs WLR_RENDERER=vulkan and no effects
+}
+
+# monitor "Dell Inc. DELL U2419H*" {
+#     mode = 1920x1080@60     # @Hz is optional. @60 will match 59.95Hz etc.
+#     position = 1536,0       # layout pixels (after scaling is applied)
+#     scale = 1.25
+#     transform = normal      # 90, 180, 270, flipped, etc.
+#     adaptive_sync = false
+#     hdr = true
+#     enabled = true
+# }
+#
+# note: `auto` is not the same as omitting the key.
+# omitting a key means "leave it alone on reload" (so wlr-randr/kanshi
+# changes don't get overwritten). `auto` explicitly resets it to the default.
+#
+# if multiple blocks match, they all apply. the bottom-most one wins for conflicts.
+# aro won't let you turn off your only active monitor via config.
+
+# === wallpaper and bar ===
+# no need to set one here: `aropaper FILE` or `aroctl wallpaper FILE` changes
+# it, and aro remembers it across sessions (~/.local/state/aro/wallpaper).
+# this line is for pinning one in your dotfiles; changing it replaces the
+# remembered one. auto is aro's own wallpaper, a path shows that image (png,
+# jpeg, svg; ~ works), and none draws nothing, to run swaybg or similar yourself.
+# wallpaper = auto
+# wallpaper = ~/pictures/wallpaper.jpg
+
+# mod+w picks one from a strip of thumbnails: arrows browse, typing searches,
+# enter applies. it lists these folders (three levels deep) and aro's own
+# wallpapers; with no wallpaper_dir line, ~/Pictures/Wallpapers (or ~/Pictures
+# when there is none) and ~/.local/share/backgrounds.
+# thumbnails are cached in ~/.cache/aro/thumbnails.
+# wallpaper_dir = ~/pictures/wallpapers
+# wallpaper_dir = ~/pictures/walls-extra
+
+# false removes the bar and gives its space to windows (running waybar, say).
+bar = false
+bar_battery = true         # charge left of the clock, on machines with a battery
+
+# === spacing ===
+gaps = 5
+outer_gaps = 10
+border = 1
+radius = 8                  # requires building with -Deffects=true
+min_size = 80               # minimum size for a tiled window
+header_height = 0
+# always: draw our header even if the app draws its own (results in two titlebars).
+# auto: hide our header if the app uses CSD.
+header = always
+bar_height = 30             # 0 is the same as bar = false
+bar_padding = 12
+text_padding = 10
+
+# floating windows use these minimums instead of min_size,
+# otherwise tiny dialogs could shrink to 80x80.
+float_min_width = 240
+float_min_height = 120
+float_scale = 0.42
+
+# === see-through windows ===
+# 1.0 is solid. a rule can set its own: rule = app_id:foot iopacity 0.9
+opacity = 1.0
+opacity_unfocused = 1.0
+# what shows behind an app's own see-through parts, e.g. a terminal with a
+# translucent background. auto is the frame colour; 00000000 shows the desktop.
+window_background = auto
+# blur what is behind see-through windows. needs a SceneFX build, which the
+# vulkan renderer (and so hdr) is not; it costs GPU time on every frame.
+blur = false
+blur_passes = 2                 # 1 to 10: more is smoother and slower
+blur_radius = 5                 # 1 to 100
+# layer surfaces to blur behind, by namespace (globs): bars, launchers, ...
+# blur_layers = waybar rofi fuzzel
+
+# === colors ===
+# the design uses a single accent color, only applied to the focused window.
+background = 0x0D0F11ff
+frame = 0x0D0F11ff
+frame_focus = 0x0D0F11ff
+border_color = 0x58656cff
+accent = 0xBAC2C2ff
+accent_soft = 0xBAC2C24d
+text = 0xc2c3c3ff
+text_dim = 0x58656cff
+bar_color = 0x0D0F11ff
+urgent = 0xc0566bff
+drop_fill = 0xe6a54b1f      # drag-and-drop preview background
+drop_line = 0xe6a54bcc
+
+# built-in toast notifications (not a real notification daemon)
+notify_color = 0x12161deb
+notify_ms = 6000
+notify_max_width = 520
+scrim_color = 0x0c0f13b3    # background dimming for the exit prompt
+
+font = Sans 10
+font_small = Sans 9
+
+anim_ms = 340
+fullscreen_anim_ms = 220    # no spring overshoot for fullscreen
+focus_anim_ms = 160
+drop_anim_ms = 160
+
+# workspace switches slide the old workspace out and the new one in.
+# a higher workspace number comes in from the right (or from below).
+# with two monitors the windows briefly cross onto the other screen.
+workspace_slide = horizontal    # horizontal | vertical | off
+workspace_slide_ms = 220        # no overshoot; 0 is the same as off
+open_scale = 0.88
+
+# === window switcher (mod+tab) ===
+# windows in recently-used order, across every workspace and screen.
+# hold mod and tap tab to walk the list; let go of mod to switch.
+switcher_delay_ms = 150         # a quick tap swaps windows without showing the card
+switcher_debounce_ms = 750      # how long a window needs focus to count as "used"
+                                # (typing into it counts immediately)
+switcher_preview_height = 260   # capped at half the screen; with many
+                                # windows previews shrink (to 60% at most)
+                                # so the row fits the screen width
+
+# === overview (mod+o) ===
+# every workspace, zoomed out along the workspace_slide axis.
+overview_zoom = 0.5
+overview_ms = 250
+overview_tint = 0x0c0f1366      # over the wallpaper, which is blurred with effects
+
+# === pointer ===
+drag_threshold = 12         # pixels to drag before a tiled window detaches
+resize_zone = 8             # edge grab area in pixels
+resize_step = 0.04          # resize amount per keypress
+
+# === startup ===
+# saving this file reloads it instantly. syntax errors will pop up a toast.
+#
+# exec        runs once on startup.
+# exec_always runs on startup AND on every config reload (doesn't kill old instances).
+# === environment ===
+exec = dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR
+
+exec = systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR
+exec = ~/.config/aro/scripts/pywal-wallpaper
+
+# === autostart ===
+exec = waybar
+
+exec = ~/.config/sway/scripts/notifications
+
+exec_always = systemctl --user restart mpd
+
+
+# === window rules ===
+rule = app_id:kitty opacity 0.80 opacity_unfocused 0.80
+# rule = <match>... <action>...
+#
+# match:   app_id:<pattern>   title:<pattern>   type:<pattern>
+#          supports globs (* and ?). case-insensitive.
+#          wrap patterns with spaces in quotes: title:"Open File".
+#          all matches on a line must be true. you need at least one match.
+#          (app_id maps to WM_CLASS for X11 windows).
+#
+#          type is the window type: normal, dialog, splash, utility,
+#          toolbar, menu, dropdown-menu, popup-menu, tooltip, notification,
+#          combo, dnd, dock, desktop. X11 windows report their own; Wayland
+#          windows are only ever normal, or dialog when they have a parent.
+#          dialog, utility, toolbar and splash already float by default.
+#
+# action:  float | tile | fullscreen | workspace <1..32> | scratchpad | sticky
+#          monitor <name>     open on that screen (a glob, as in monitor blocks)
+#          size <w> <h>       floating size, frame included: pixels, or 60% of the screen
+#          position <x> <y>   floating top-left, from the screen's usable corner
+#          center             floating, centred (the default place)
+#          no_border | no_header | no_radius   take that part of the frame away
+#          opacity <n> | opacity_unfocused <n>   0.05 to 1, over the config's
+#          scratchpad opens the window hidden, for scratchpad_show to bring out.
+#          use `tile` to force tiling on dialogs, or `float` to force floating;
+#          size and position only apply to floating windows.
+#
+# rules apply top-to-bottom. if multiple rules set the same property, the last one wins.
+# rules are evaluated on window map, title change, app_id change, and config
+# reload. only what changed is re-applied.
+#
+# tip: check the logs when a window opens to find its app_id and type:
+#   map: app_id="org.gnome.Calculator" title="Calculator" type=normal
+#
+# rule = app_id:mpv  workspace 3
+# rule = app_id:pavucontrol  float  size 800 500  center
+# rule = app_id:mpv  no_border  no_header  no_radius
+# rule = app_id:discord  monitor HDMI-A-1
+# rule = app_id:dropterm  scratchpad   (with exec = foot --app-id dropterm and
+#                                      bind = mod+grave, scratchpad_show, dropterm)
+# rule = app_id:firefox  title:Picture-in-Picture  float
+# rule = app_id:org.gnome.Calculator  float
+# rule = title:*YouTube*  fullscreen
+# rule = type:splash  workspace 1
+# rule = type:dialog  app_id:gimp*  tile
+
+# === keybindings ===
+# bind = <combo>, <action>[, <argument>]
+#
+# adding your first `bind` line completely replaces the default keybindings.
+# a combo can end in a mouse button instead of a key:
+#   mouse_left, mouse_right, mouse_middle, mouse_back, mouse_forward
+#   bind = mod+mouse_back, workspace, 1
+#
+# actions: spawn <cmd> | close | quit | float | fullscreen
+#          focus|move|resize left|right|up|down
+#          move_workspace left|right|up|down   (to the monitor in that direction)
+#          sticky   (floating, on every workspace of its monitor)
+#          scratchpad   (hide the window in the scratchpad, or take it out)
+#          group left|right|up|down   (into that tile as a tab; a tile of tabs shows one window)
+#          ungroup   (out of its tabs, into a tile of its own)
+#          tab next|prev   (the next or previous tab; clicking a tab or the wheel works too)
+#          wallpapers   (the wallpaper picker; see wallpaper_dir)
+#          scratchpad_show [app_id]   (bring the latest scratchpad window, or the
+#                   latest matching the glob, to this workspace; again hides it)
+#          maximize (layout = scroll: the column fills the screen, or goes back)
+#          width next|prev   (layout = scroll: the next preset column width)
+#          workspace|sendto 1..32
+#          split right|down
+#          switch next|prev
+# === keybindings ===
+
+# Terminal / launcher
+bind = mod+e, spawn, flatpak run org.kde.dolphin
+bind = mod+t, spawn, kitty
+bind = mod+d, spawn, rofi -show drun -theme ~/.config/sway/rofi/launcher.rasi
+
+# Rofi menus
+bind = mod+x, spawn, ~/.config/sway/scripts/rofi_powermenu
+bind = mod+n, spawn, ~/.config/sway/scripts/rofi_network
+bind = mod+b, spawn, ~/.config/sway/scripts/rofi_bluetooth
+bind = mod+shift+s, spawn, ~/.config/sway/scripts/rofi_screenshot
+
+# Window management
+bind = mod+q, close
+bind = mod+shift+e, quit
+bind = mod+shift+c, spawn, aroctl reload
+bind = mod+space, float
+bind = mod+f, fullscreen
+
+# Window switcher
+bind = mod+Tab, switch, next
+bind = mod+shift+Tab, switch, prev
+
+# Layouts / overview
+bind = mod+Return, layout, toggle
+bind = mod+o, overview
+bind = mod+m, maximize
+
+# Scroll layout width
+bind = mod+shift+r, width, next
+
+# Scratchpad
+bind = mod+shift+minus, scratchpad
+bind = mod+minus, scratchpad_show
+
+# Tabs
+bind = mod+alt+h, group, left
+bind = mod+alt+j, group, down
+bind = mod+alt+k, group, up
+bind = mod+alt+l, group, right
+bind = mod+shift+g, ungroup
+bind = mod+bracketright, tab, next
+bind = mod+bracketleft, tab, prev
+
+# Wallpaper
+bind = mod+w, wallpapers
+
+# Splitting
+bind = mod+v, split, right
+bind = mod+s, split, down
+
+# Focus
+bind = mod+h, focus, left
+bind = mod+j, focus, down
+bind = mod+k, focus, up
+bind = mod+l, focus, right
+
+# Move windows
+bind = mod+shift+h, move, left
+bind = mod+shift+j, move, down
+bind = mod+shift+k, move, up
+bind = mod+shift+l, move, right
+
+# Resize windows
+bind = mod+ctrl+h, resize, left
+bind = mod+ctrl+j, resize, down
+bind = mod+ctrl+k, resize, up
+bind = mod+ctrl+l, resize, right
+
+# Workspaces
+bind = mod+1, workspace, 1
+bind = mod+2, workspace, 2
+bind = mod+3, workspace, 3
+bind = mod+4, workspace, 4
+bind = mod+5, workspace, 5
+bind = mod+6, workspace, 6
+bind = mod+7, workspace, 7
+bind = mod+8, workspace, 8
+
+# Send windows to workspaces
+bind = mod+shift+1, sendto, 1
+bind = mod+shift+2, sendto, 2
+bind = mod+shift+3, sendto, 3
+bind = mod+shift+4, sendto, 4
+bind = mod+shift+5, sendto, 5
+bind = mod+shift+6, sendto, 6
+bind = mod+shift+7, sendto, 7
+bind = mod+shift+8, sendto, 8
+

@@ -1,0 +1,266 @@
+/** ********** Import Colors ********** **/
+@import "../../.cache/wal/colors-waybar.css";
+
+/** ********** Fonts ********/
+* {
+    font-family: "DejaVu Sans Mono";
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/** ********** Waybar Window ********** **/
+window#waybar {
+    background-color: @background;
+    color: @background;
+    border-bottom: 2px solid @background-alt;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.8;
+}
+
+/** ********** Battery ********** **/
+@keyframes blink {
+    to {
+        color: @background-alt;
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/** ********** Sway ********** **/
+#workspaces {
+    background: transparent;
+    background-color: transparent;
+    padding: 0;
+}
+
+#workspaces button.active {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    color: @foreground;
+    border: none;
+    border-radius: 8px;
+    margin: 0 2px;
+    padding: 2px 6px;
+}
+
+/* Inactive workspaces */
+#workspaces button:not(.active) {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    color: @foreground;
+    border: none;
+}
+
+/* Hover does not create a box */
+#workspaces button:hover {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    color: @foreground;
+    border: none;
+}
+
+/* Current workspace only */
+#workspaces button.focused {
+    background-color: @cyan;
+    background-image: none;
+    color: @background;
+    border: none;
+    border-radius: 8px;
+    padding: 2px 6px;
+}
+
+/* Keep urgent workspaces visually distinct */
+#workspaces button.urgent {
+    background-color: @red;
+    color: @background;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Persistent inactive workspaces stay plain */
+#workspaces button.persistent {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    color: @foreground;
+    border: none;
+}
+
+#workspaces button.current_output {
+}
+
+/* If workspaces is the leftmost module */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+/** ********** Mode ********** **/
+#mode {
+    background-color: @background-alt;
+    color: @selected;
+    font-weight: bold;
+}
+
+/** ********** Window ********** **/
+#window {
+    background-color: @background-alt;
+    color: @foreground;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+/** ********** Tray ********** **/
+#tray {
+    background-color: @background-alt;
+    border-radius: 8px 0 0 0;
+    padding: 4px 6px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/** ********** MPD ********** **/
+#mpd,
+#mpd.paused,
+#mpd.disconnected,
+#mpd.stopped {
+    background-color: @background-alt;
+    color: @red;
+}
+
+#mpd.playing {
+    background-color: @background-alt;
+    color: @foreground;
+}
+
+/** ********** Pulseaudio ********** **/
+#pulseaudio {
+    background-color: @cyan;
+    background-image: none;
+    color: @background;
+    border-radius: 0 8px 8px 0;
+    margin: 0;
+    padding: 2px 10px 2px 4px;
+}
+
+#pulseaudio.bluetooth {
+}
+
+#pulseaudio.muted {
+    color: @red;
+}
+
+/** ********** Volume Slider **********/
+#pulseaudio-slider {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 2px 4px 2px 7px;
+    min-width: 90px;
+}
+
+#pulseaudio-slider trough {
+    min-width: 90px;
+    min-height: 5px;
+    border-radius: 14px;
+    background-color: @background;
+}
+
+#pulseaudio-slider highlight {
+    min-height: 5px;
+    border-radius: 14px;
+    background-color: @cyan;
+}
+
+#pulseaudio-slider slider {
+    min-width: 9px;
+    min-height: 9px;
+    margin: -2px;
+    border-radius: 50%;
+    background-color: @foreground;
+    border: none;
+    box-shadow: none;
+}
+
+#pulseaudio-slider.muted {
+    background: transparent;
+    background-color: transparent;
+}
+
+#pulseaudio-slider.muted highlight {
+    background-color: @background-alt;
+}
+
+/** ********** Network ********** **/
+#network.disconnected,
+#network.disabled {
+    color: @red;
+}
+
+/** ********** Bluetooth ********** **/
+#bluetooth.disabled,
+#bluetooth.off {
+    color: @red;
+}
+
+/** ********** Custom ********** **/
+#custom-themes {
+    background-color: @background-alt;
+    color: @selected;
+}
+
+/** ********** Common style **********/
+#backlight,
+#battery,
+#clock,
+#pulseaudio,
+#network,
+#bluetooth {
+    background-color: @background-alt;
+    color: @foreground;
+}
+
+#backlight,
+#battery,
+#clock,
+#mode,
+#window,
+#mpd,
+#pulseaudio,
+#network,
+#bluetooth,
+#custom-themes {
+    border-radius: 8px;
+    margin: 0;
+    padding: 2px 10px;
+}
+

@@ -1,0 +1,6 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export EDITOR:nvim
+SETUVAR --export VISUAL:nvim
+SETUVAR __fish_initialized:4300
+SETUVAR fish_user_paths:/home/behzat/\x2evenvs/spotdl/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/bin\x1e/opt/bin\x1e/usr/lib/llvm/23/bin\x1e/usr/lib/llvm/22/bin

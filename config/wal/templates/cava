@@ -1,0 +1,7 @@
+[color]
+foreground = default
+
+gradient = 1
+gradient_color_1 = '{color4}'
+gradient_color_2 = '{color5}'
+gradient_color_3 = '{color6}'

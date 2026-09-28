@@ -1,0 +1,25 @@
+@define-color background {background};
+@define-color foreground {foreground};
+@define-color cursor {cursor};
+
+@define-color background-alt {color0};
+
+@define-color black {color0};
+@define-color red {color1};
+@define-color green {color2};
+@define-color yellow {color3};
+@define-color blue {color4};
+@define-color magenta {color5};
+@define-color cyan {color6};
+@define-color white {color7};
+
+@define-color bright-black {color8};
+@define-color bright-red {color9};
+@define-color bright-green {color10};
+@define-color bright-yellow {color11};
+@define-color bright-blue {color12};
+@define-color bright-magenta {color13};
+@define-color bright-cyan {color14};
+@define-color bright-white {color15};
+
+@define-color selected {color4};

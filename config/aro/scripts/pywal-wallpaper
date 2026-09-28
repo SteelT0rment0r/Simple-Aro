@@ -1,0 +1,55 @@
+#!/usr/bin/env fish
+set state_dir "$HOME/.local/state/aro"
+set state "$state_dir/wallpaper"
+set aro_config "$HOME/.config/aro/config"
+
+while true
+    inotifywait -q -e moved_to "$state_dir" >/dev/null 2>&1
+
+    set wallpaper (string match -r "^wallpaper = (.+)\$" < "$state")[2]
+
+    if test -n "$wallpaper"; and test -f "$wallpaper"
+        echo "Pywal: $wallpaper"
+
+        # Generate Pywal colors
+        wal -i "$wallpaper" -q -s
+
+        # Read Pywal palette
+        set bg (sed -n '1p' "$HOME/.cache/wal/colors" | string sub -s 2)
+        set accent (sed -n '7p' "$HOME/.cache/wal/colors" | string sub -s 2)
+        set fg (sed -n '8p' "$HOME/.cache/wal/colors" | string sub -s 2)
+        set muted (sed -n '9p' "$HOME/.cache/wal/colors" | string sub -s 2)
+
+        # Apply Pywal colors to ARO
+        sed -i \
+            -e "s/^background = .*/background = 0x"$bg"ff/" \
+            -e "s/^frame = .*/frame = 0x"$bg"ff/" \
+            -e "s/^frame_focus = .*/frame_focus = 0x"$bg"ff/" \
+            -e "s/^border_color = .*/border_color = 0x"$muted"ff/" \
+            -e "s/^accent = .*/accent = 0x"$accent"ff/" \
+            -e "s/^accent_soft = .*/accent_soft = 0x"$accent"4d/" \
+            -e "s/^text = .*/text = 0x"$fg"ff/" \
+            -e "s/^text_dim = .*/text_dim = 0x"$muted"ff/" \
+            -e "s/^bar_color = .*/bar_color = 0x"$bg"ff/" \
+            "$aro_config"
+
+        # Reload ARO
+        aroctl reload
+
+        # Reload Kitty with its active socket
+        set kitty_socket (find /tmp -maxdepth 1 -type s -name 'kitty-*' | head -n 1)
+
+        if test -n "$kitty_socket"
+            echo "Kitty: $kitty_socket"
+            env KITTY_LISTEN_ON="unix:$kitty_socket" kitty @ load-config
+            echo "Kitty reload: $status"
+        else
+            echo "Kitty: no socket found"
+        end
+
+        # Reload Waybar
+        pkill -x waybar
+        waybar >/dev/null 2>&1 &
+    end
+end
+
