@@ -1,4 +1,4 @@
-Its a basic Aro dotfile repo that has everything you need, the compositor is excellent especially for its age and immedietly decided to rice it and made this pretty minimal and capable rice
+Its a basic Aro dotfile repo that has everything you need, the compositor is excellent especially for its age so i immedietly decided to rice it and made this pretty minimal and capable rice
 
 
 aro --> https://github.com/simeulinuxkaliaiwr/aro
