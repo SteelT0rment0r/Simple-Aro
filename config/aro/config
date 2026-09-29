@@ -191,16 +191,16 @@ scrim_color = 0x0c0f13b3    # background dimming for the exit prompt
 font = Sans 10
 font_small = Sans 9
 
-anim_ms = 340
-fullscreen_anim_ms = 220    # no spring overshoot for fullscreen
-focus_anim_ms = 160
-drop_anim_ms = 160
+anim_ms = 110
+fullscreen_anim_ms = 110    # no spring overshoot for fullscreen
+focus_anim_ms = 90
+drop_anim_ms = 80
 
 # workspace switches slide the old workspace out and the new one in.
 # a higher workspace number comes in from the right (or from below).
 # with two monitors the windows briefly cross onto the other screen.
 workspace_slide = horizontal    # horizontal | vertical | off
-workspace_slide_ms = 220        # no overshoot; 0 is the same as off
+workspace_slide_ms = 60         # no overshoot; 0 is the same as off
 open_scale = 0.88
 
 # === window switcher (mod+tab) ===

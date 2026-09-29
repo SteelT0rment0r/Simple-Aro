@@ -13,10 +13,10 @@
     "width": "", 					// Waybar width (empty for auto width)
     "spacing": 6, 					// Gaps between modules
     "margin": 0, 					// Space around the bar
-    "margin-top": 0, 				// Space above the bar
+    "margin-top": 5, 				// Space above the bar
     "margin-bottom": 0, 			// Space below the bar
-    "margin-left": 0, 				// Space to the left of the bar
-    "margin-right": 0, 				// Space to the right of the bar
+    "margin-left": 10, 				// Space to the left of the bar
+    "margin-right": 10, 				// Space to the right of the bar
     "fixed-center": true, 			// Center modules position
     "reload_style_on_change": true, // Reload changes
 
