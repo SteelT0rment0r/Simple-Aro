@@ -43,7 +43,7 @@ workspaces = 8
 
 # === keyboard ===
 # falls back to XKB_DEFAULT_* env vars if unset.
-keyboard_layout = us
+keyboard_layout = tr
 # keyboard_variant = nodeadkeys
 # keyboard_options = compose:ralt
 # keyboard_model =
@@ -134,7 +134,7 @@ bar_battery = true         # charge left of the clock, on machines with a batter
 
 # === spacing ===
 gaps = 5
-outer_gaps = 10
+outer_gaps = 5
 border = 1
 radius = 8                  # requires building with -Deffects=true
 min_size = 80               # minimum size for a tiled window
@@ -237,7 +237,7 @@ exec = ~/.config/aro/scripts/pywal-wallpaper
 
 # === autostart ===
 exec = ~/.config/aro/scripts/notifications
-
+exec = ~/.config/aro/scripts/wallpaper-watcher &
 exec_always = systemctl --user restart mpd
 
 

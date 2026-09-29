@@ -1,0 +1,11 @@
+#!/usr/bin/env fish
+
+set wallpaper_state ~/.local/state/aro/wallpaper
+
+mkdir -p (dirname "$wallpaper_state")
+touch "$wallpaper_state"
+
+while true
+    inotifywait -q -e close_write,move,create "$wallpaper_state" >/dev/null 2>&1
+    ~/.config/aro/scripts/pywal-wallpaper
+end

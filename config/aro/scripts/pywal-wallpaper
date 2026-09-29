@@ -36,18 +36,20 @@ while true
         # Reload ARO
         aroctl reload
 
-        # Reload Kitty with its active socket
-        set kitty_socket (find /tmp -maxdepth 1 -type s -name 'kitty-*' | head -n 1)
+        # Reload Kitty instances
+        set kitty_sockets (find /tmp -maxdepth 1 -type s -name 'kitty-*')
 
-        if test -n "$kitty_socket"
-            echo "Kitty: $kitty_socket"
-            env KITTY_LISTEN_ON="unix:$kitty_socket" kitty @ load-config
-            echo "Kitty reload: $status"
+if test (count $kitty_sockets) -gt 0
+            for kitty_socket in $kitty_sockets
+                echo "Kitty: $kitty_socket"
+                env KITTY_LISTEN_ON="unix:$kitty_socket" kitty @ load-config
+                echo "Kitty reload: $status"
+            end
         else
-            echo "Kitty: no socket found"
+            echo "Kitty: no sockets found"
         end
 
-        # Reload Waybar
+# Reload Waybar
         pkill -x waybar
         waybar >/dev/null 2>&1 &
     end
