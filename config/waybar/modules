@@ -57,7 +57,7 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "~/.config/sway/scripts/rofi_bluetooth",
+        "on-click": "~/.config/aro/scripts/rofi_bluetooth",
         "on-click-right": "blueman-manager",
     },
 
@@ -72,13 +72,6 @@
     },
 
 	// waybar-custom
-    "custom/themes": {
-         "format": "",
-         "tooltip": true,
-         "tooltip-format": "Left click to apply random theme.\n\nRight click to set default theme.",
-         "on-click": "$HOME/.config/sway/theme/theme.sh --pywal",
-         "on-click-right": "$HOME/.config/sway/theme/theme.sh --default",
-    },
 
     
 	// waybar-idle-inhibitor
@@ -92,19 +85,6 @@
     },
 
 	// waybar-spotify
-    "custom/spotify": {
-        "exec": "$HOME/.config/sway/waybar/spotify",
-        "interval": 1,
-        "format": "{}",
-        "tooltip": true,
-        "max-length": 30,
-        "on-click": "playerctl -p spotify play-pause",
-        "on-click-middle": "playerctl -p spotify previous",
-        "on-click-right": "playerctl -p spotify next",
-        "on-scroll-up": "playerctl -p spotify position 05+",
-        "on-scroll-down": "playerctl -p spotify position 05-",
-        "smooth-scrolling-threshold": 1,
-    },
 
  
 	// waybar-network
@@ -118,7 +98,7 @@
         "format-disabled": "睊 Disabled",
         "format-alt": " {bandwidthUpBits} |  {bandwidthDownBits}",
         "tooltip-format": " {ifname} via {gwaddr}",
-        "on-click-right": "~/.config/sway/scripts/rofi_network",
+        "on-click-right": "~/.config/aro/scripts/rofi_network",
     },
 
 	// waybar-pulseaudio
@@ -155,10 +135,6 @@
     "unmute-on-volume-change": true
 },
 
-    	// waybar-sway-mode
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
 
   // waybar-aro-workspaces
 "ext/workspaces": {

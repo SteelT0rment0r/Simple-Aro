@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/.config/aro"
+RASI="$HOME/.config/rofi/powermenu.rasi"
+CNFR="$HOME/.config/rofi/confirm.rasi"
+
+prompt="$(hostname) (${DESKTOP_SESSION:-aro})"
+mesg="$(uptime -p | sed 's/^up //')"
+
+option_1='Lock'
+option_2='Logout'
+option_3='Reboot'
+option_4='Shutdown'
+
+yes='Yes'
+no='No'
+
+rofi_cmd() {
+    rofi -dmenu \
+        -p "$prompt" \
+        -mesg "$mesg" \
+        -markup-rows \
+        -theme "$RASI"
+}
+
+run_rofi() {
+    printf '%s\n' \
+        "$option_1" \
+        "$option_2" \
+        "$option_3" \
+        "$option_4" |
+        rofi_cmd
+}
+
+confirm_cmd() {
+    rofi -dmenu \
+        -p 'Confirmation' \
+        -mesg 'Are you sure?' \
+        -selected-row 1 \
+        -no-click-to-exit \
+        -theme "$CNFR"
+}
+
+confirm_exit() {
+    [[ "$(printf '%s\n' "$yes" "$no" | confirm_cmd)" == "$yes" ]]
+}
+
+run_cmd() {
+    case "$1" in
+        1) "$DIR/scripts/current_lock" ;;
+        2) aroctl dispatch quit ;;
+        3) systemctl reboot ;;
+        4) systemctl poweroff ;;
+    esac
+}
+
+chosen="$(run_rofi)"
+
+case "$chosen" in
+    "$option_1") confirm_exit && run_cmd 1 ;;
+    "$option_2") confirm_exit && run_cmd 2 ;;
+    "$option_3") confirm_exit && run_cmd 3 ;;
+    "$option_4") confirm_exit && run_cmd 4 ;;
+esac
+

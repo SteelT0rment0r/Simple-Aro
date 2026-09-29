@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
- **/
 
 /*****----- Configuration -----*****/
 configuration {
@@ -87,7 +84,7 @@ listview {
     lines:                       6;
     cycle:                       true;
     dynamic:                     true;
-    scrollbar:                   false;
+    scrollbar:                   true;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                true;
@@ -99,7 +96,7 @@ listview {
     cursor:                      "default";
 }
 scrollbar {
-    handle-width:                5px ;
+    handle-width:                2px ;
     handle-color:                @selected;
     border-radius:               8px;
     background-color:            @background-alt;

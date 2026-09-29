@@ -1,0 +1,224 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/.config/aro"
+RASI="$HOME/.config/rofi/screenshot.rasi"
+
+prompt='Screenshot / Recording'
+mesg="Screenshots :: $(xdg-user-dir PICTURES)/Screenshots"
+
+# Options
+option_1='Capture Desktop'
+option_2='Capture Area'
+option_3='Capture Window'
+option_4='Capture in 5s'
+option_5='Capture in 10s'
+option_6='Record Desktop'
+option_7='Record Area'
+option_8='Stop Recording'
+
+# Rofi
+rofi_cmd() {
+    rofi -dmenu \
+        -p "$prompt" \
+        -mesg "$mesg" \
+        -markup-rows \
+        -theme "$RASI"
+}
+
+run_rofi() {
+    if pgrep -x wf-recorder >/dev/null 2>&1; then
+        printf '%s\n' \
+            "$option_1" \
+            "$option_2" \
+            "$option_3" \
+            "$option_4" \
+            "$option_5" \
+            "$option_6" \
+            "$option_7" \
+            "$option_8"
+    else
+        printf '%s\n' \
+            "$option_1" \
+            "$option_2" \
+            "$option_3" \
+            "$option_4" \
+            "$option_5" \
+            "$option_6" \
+            "$option_7"
+    fi | rofi_cmd
+}
+
+# Screenshot filename
+time="$(date +%Y-%m-%d-%H-%M-%S)"
+
+dir="$(xdg-user-dir PICTURES)/Screenshots"
+file="Screenshot_${time}.png"
+
+mkdir -p "$dir"
+
+# Recording directory
+record_dir="$(xdg-user-dir VIDEOS)/Recordings"
+mkdir -p "$record_dir"
+
+# Notifications
+iDIR="$DIR/mako/icons"
+
+notify_view() {
+    notify-send \
+        -h string:x-canonical-private-synchronous:sys-notify-shot \
+        -u low \
+        -i "$iDIR/picture.png" \
+        'Copied to clipboard.'
+
+    paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga \
+        &>/dev/null &
+
+    if command -v viewnior >/dev/null 2>&1; then
+        viewnior "$dir/$file"
+    fi
+
+    if [[ -e "$dir/$file" ]]; then
+        notify-send \
+            -h string:x-canonical-private-synchronous:sys-notify-shot \
+            -u low \
+            -i "$iDIR/picture.png" \
+            'Screenshot Saved.'
+    else
+        notify-send \
+            -h string:x-canonical-private-synchronous:sys-notify-shot \
+            -u low \
+            -i "$iDIR/picture.png" \
+            'Screenshot Deleted.'
+    fi
+}
+
+# Countdown
+countdown() {
+    for sec in $(seq "$1" -1 1); do
+        notify-send \
+            -h string:x-canonical-private-synchronous:sys-notify-count \
+            -t 1000 \
+            -i "$iDIR/timer.png" \
+            "Taking shot in : $sec"
+        sleep 1
+    done
+}
+
+# Capture full screen
+shotnow() {
+    cd "$dir" || exit 1
+    sleep 0.5
+    grim - | tee "$file" | wl-copy
+    notify_view
+}
+
+# Capture after 5 seconds
+shot5() {
+    countdown 5
+    sleep 1
+    cd "$dir" || exit 1
+    grim - | tee "$file" | wl-copy
+    notify_view
+}
+
+# Capture after 10 seconds
+shot10() {
+    countdown 10
+    sleep 1
+    cd "$dir" || exit 1
+    grim - | tee "$file" | wl-copy
+    notify_view
+}
+
+# Capture focused window
+shotwin() {
+    geometry="$(aroctl -j focused | jq -r '"(.x),(.y) (.width)x(.height)"')"
+
+    cd "$dir" || exit 1
+    grim -g "$geometry" - | tee "$file" | wl-copy
+    notify_view
+}
+
+# Capture selected area
+shotarea() {
+    geometry="$(slurp \
+        -b "${background:-#000000}CC" \
+        -c "${accent:-#ffffff}ff" \
+        -s "${accent:-#ffffff}0D" \
+        -w 2)"
+
+    [[ -z "$geometry" ]] && exit 0
+
+    cd "$dir" || exit 1
+    grim -g "$geometry" - | tee "$file" | wl-copy
+    notify_view
+}
+
+# Record entire desktop
+record_desktop() {
+    time="$(date +%Y-%m-%d-%H-%M-%S)"
+    file="$record_dir/Recording_${time}.mp4"
+
+    
+
+    wf-recorder -f "$file" &
+
+    disown
+
+    notify-send \
+        -i "$iDIR/timer.png" \
+        'Screen Recording' \
+        "Recording saved to $file"
+}
+
+# Record selected area
+record_area() {
+    geometry="$(slurp \
+        -b "${background:-#000000}CC" \
+        -c "${accent:-#ffffff}ff" \
+        -s "${accent:-#ffffff}0D" \
+        -w 2)"
+
+    [[ -z "$geometry" ]] && exit 0
+
+    time="$(date +%Y-%m-%d-%H-%M-%S)"
+    file="$record_dir/Recording_${time}.mp4"
+
+    notify-send \
+        -i "$iDIR/timer.png" \
+        'Screen Recording' \
+        'Recording started.'
+
+    wf-recorder -g "$geometry" -f "$file" &
+
+    disown
+}
+
+stop_recording() {
+    if pgrep -x wf-recorder >/dev/null 2>&1; then
+        pkill -INT -x wf-recorder
+        sleep 1
+
+        notify-send \
+            -i "$iDIR/picture.png" \
+            'Screen Recording' \
+            'Recording saved.'
+    else
+        notify-send \
+            -i "$iDIR/picture.png" \
+            'Screen Recording' \
+            'No recording is currently running.'
+    fi
+}
+
+# Execute
+case "$(run_rofi)" in
+    "$option_1") shotnow ;;
+    "$option_2") shotarea ;;
+    "$option_3") shotwin ;;
+    "$option_4") shot5 ;;
+    "$option_5") shot10 ;;
+    "$option_6") record_desktop ;;
+    "$option_7") record_area ;;
+    "$option_8") stop_recording ;;
+esac

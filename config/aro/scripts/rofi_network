@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+
+# config directory
+DIR="$HOME/.config/aro"
+
+# Run networkmanager_dmenu with the config
+networkmanager_dmenu --config "$HOME/.config/rofi/networkmenu_config.ini"

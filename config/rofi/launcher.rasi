@@ -1,15 +1,12 @@
-/**
- * Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
- **/
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run,filebrowser";
+    modi:                       "drun,run,filebrowser";
     show-icons:                 true;
     display-drun:               "";
     display-run:                "";
     display-filebrowser:        "";
-	drun-display-format:        "{name}";
+    drun-display-format:        "{name}";
 }
 
 /*****----- Global Properties -----*****/
@@ -18,7 +15,6 @@ configuration {
 
 /*****----- Main Window -----*****/
 window {
-    /* properties for window widget */
     transparency:                "real";
     location:                    center;
     anchor:                      center;
@@ -27,13 +23,12 @@ window {
     x-offset:                    0px;
     y-offset:                    0px;
 
-    /* properties for all widgets */
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
-    border:                      2px solid;
+    border:                      1px solid;
     border-radius:               8px;
-    border-color:                @background-alt;
+    border-color:                @selected;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -65,6 +60,7 @@ prompt {
     background-color:            inherit;
     text-color:                  inherit;
 }
+
 textbox-prompt-colon {
     enabled:                     true;
     padding:                     8px 0px;
@@ -73,6 +69,7 @@ textbox-prompt-colon {
     background-color:            inherit;
     text-color:                  inherit;
 }
+
 entry {
     enabled:                     true;
     padding:                     8px 0px;
@@ -90,19 +87,20 @@ listview {
     lines:                       7;
     cycle:                       true;
     dynamic:                     true;
-    scrollbar:                   false;
+    scrollbar:                   true;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
-    
+
     spacing:                     5px;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
 }
+
 scrollbar {
-    handle-width:                5px ;
+    handle-width:                2px;
     handle-color:                @selected;
     border-radius:               8px;
     background-color:            @background-alt;
@@ -119,34 +117,40 @@ element {
     text-color:                  @foreground;
     cursor:                      pointer;
 }
+
 element normal.normal,
 element alternate.normal {
-    background-color:            var(background);
-    text-color:                  var(foreground);
+    background-color:            @background;
+    text-color:                  @foreground;
 }
+
 element normal.urgent,
 element alternate.urgent,
 element selected.active {
-    background-color:            var(urgent);
-    text-color:                  var(background);
+    background-color:            @urgent;
+    text-color:                  @background;
 }
+
 element normal.active,
 element alternate.active,
 element selected.urgent {
-    background-color:            var(active);
-    text-color:                  var(background);
+    background-color:            @active;
+    text-color:                  @background;
 }
+
+/*****----- Gentcraft Selected Highlight -----*****/
 element selected.normal {
-/*    background-image:          	 linear-gradient(to right, #E06B74, #C778DD);	*/
-    background-color:            var(selected);
-    text-color:                  var(background);
+    background-color:            @selected;
+    text-color:                  @background;
 }
+
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
     size:                        24px;
     cursor:                      inherit;
 }
+
 element-text {
     background-color:            transparent;
     text-color:                  inherit;
@@ -157,7 +161,7 @@ element-text {
 }
 
 /*****----- Mode Switcher -----*****/
-mode-switcher{
+mode-switcher {
     enabled:                     true;
     spacing:                     10px;
     margin:                      0px;
@@ -165,6 +169,7 @@ mode-switcher{
     background-color:            transparent;
     text-color:                  @foreground;
 }
+
 button {
     padding:                     8px 12px;
     border-radius:               8px;
@@ -172,10 +177,10 @@ button {
     text-color:                  inherit;
     cursor:                      pointer;
 }
+
 button selected {
-/*    background-image:          	 linear-gradient(to right, #E06B74, #C778DD);	*/
-    background-color:            var(selected);
-    text-color:                  var(background);
+    background-color:            @active;
+    text-color:                  @background;
 }
 
 /*****----- Message -----*****/
@@ -187,6 +192,7 @@ message {
     background-color:            @background-alt;
     text-color:                  @foreground;
 }
+
 textbox {
     background-color:            transparent;
     text-color:                  @foreground;
@@ -197,8 +203,10 @@ textbox {
     blink:                       true;
     markup:                      true;
 }
+
 error-message {
     padding:                     30px;
     background-color:            @background;
     text-color:                  @foreground;
 }
+
