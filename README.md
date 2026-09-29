@@ -98,17 +98,17 @@ First install the dependencies above using your distro's package manager.
 
 Then clone the repo:
 
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+[git clone https://github.com/SteelT0rment0r/Simple-Aro.git
+cd Simple-Aro]
 
 Then copy the configs into your home directory:
 
-cp -r .config/* ~/.config/
+[cp -r .config/* ~/.config/]
 
 If "~/.config" doesn't exist yet:
 
-mkdir -p ~/.config
-cp -r .config/* ~/.config/
+[mkdir -p ~/.config
+cp -r .config/* ~/.config/]
 
 The repo also contains shell / other home-directory configs if you want to use those, so check the repo structure before copying anything directly into "~".
 
@@ -120,7 +120,7 @@ The wallpaper scripts expect wallpapers to be available in:
 
 So create the directory if you don't already have it:
 
-mkdir -p ~/Pictures/Wallpapers
+[mkdir -p ~/Pictures/Wallpapers]
 
 Then put your wallpapers there.
 
