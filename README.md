@@ -156,7 +156,7 @@ Most of the stuff is in:
 ~/.config/wal
 ```
 
-Feel free to change whatever you want (especially the keyboard layout because mine is tr). This is a rice, not a sacred artifact lmao you can also take it as a base, customize it and publish it I dont really care as long as you give the link to this repo.
+Feel free to change whatever you want. This is a rice, not a sacred artifact lmao you can also take it as a base, customize it and publish it I dont really care as long as you give the link to this repo.
 
 ## a few notes
 

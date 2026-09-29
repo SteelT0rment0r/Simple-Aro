@@ -43,7 +43,7 @@ workspaces = 8
 
 # === keyboard ===
 # falls back to XKB_DEFAULT_* env vars if unset.
-keyboard_layout = tr
+keyboard_layout = us
 # keyboard_variant = nodeadkeys
 # keyboard_options = compose:ralt
 # keyboard_model =
@@ -236,8 +236,6 @@ exec = systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_D
 exec = ~/.config/aro/scripts/pywal-wallpaper
 
 # === autostart ===
-exec = waybar
-
 exec = ~/.config/aro/scripts/notifications
 
 exec_always = systemctl --user restart mpd
