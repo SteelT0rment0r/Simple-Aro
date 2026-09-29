@@ -170,3 +170,4 @@ I will be adding stuff to the repo like rofi animations once the compositor supp
 
 Have fun and hope u enjoy it :)
 
+and also dont forget to remind me if there is a bug in the desktop that is caused by the rice and not the compositor, i will be happy to work on it
