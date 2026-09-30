@@ -135,8 +135,8 @@ bar_battery = true         # charge left of the clock, on machines with a batter
 # === spacing ===
 gaps = 5
 outer_gaps = 5
-border = 1
-radius = 8                  # requires building with -Deffects=true
+border = 2
+radius = 1                  # requires building with -Deffects=true
 min_size = 80               # minimum size for a tiled window
 header_height = 0
 # always: draw our header even if the app draws its own (results in two titlebars).
