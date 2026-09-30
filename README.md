@@ -4,21 +4,22 @@ Aro is an excellent compositor especially for its age, so i immediately decided 
 
 aro --> https://github.com/simeulinuxkaliaiwr/aro
 
-## what this rice has
+### what this rice has
 
 The main components i use are:
 
-* Aro — compositor / window management
-* Rofi — app launcher + system menus
-* Waybar — status bar
-* Pywal — dynamic wallpaper-based colors
-* Hyprlock — lock screen
-* Kitty — terminal
-* Fish — shell
-* Fastfetch — system info
-* Neovim — editor
-* MPD + rmpc — music player setup
-* Aro's native tools — wallpapers and compositor-specific stuff
+  * Aro — compositor / window management
+  * Rofi — app launcher + system menus
+  * Waybar — status bar
+  * Pywal — dynamic wallpaper-based colors
+  * Dolphin — KDE file manager with Pywal theming
+  * Hyprlock — lock screen
+  * Kitty — terminal
+  * Fish — shell
+  * Fastfetch — system info
+  * Neovim — editor
+  * MPD + rmpc — music player setup
+  * Aro's native tools — wallpapers and compositor-specific stuff
 
 and there are a bunch of smaller utilities behind the menus so the desktop is actually usable and not just a pretty screenshot
 
@@ -89,6 +90,21 @@ For audio, this setup expects a working PipeWire + WirePlumber setup.
 For networking, it expects NetworkManager.
 
 For Bluetooth, it expects BlueZ.
+
+### KDE / file manager
+
+  * `dolphin`
+  * `plasma-workspace`
+
+Dolphin is launched with the KDE Qt platform theme so it keeps its native KDE appearance under Aro.
+
+The Dolphin color scheme is generated from the current Pywal palette by:
+
+  * `config/pywal/kde-colors.sh`
+  * `~/.cache/wal/colors`
+  * KDE's `Pywal.colors` color scheme
+
+When the wallpaper changes, the Pywal wallpaper script regenerates the KDE colors and restarts Dolphin so the file manager follows the wallpaper's color palette automatically.
 
 ## manual installation
 
