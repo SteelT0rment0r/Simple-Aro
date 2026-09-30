@@ -153,9 +153,9 @@ float_min_height = 120
 float_scale = 0.42
 
 # === see-through windows ===
-# 1.0 is solid. a rule can set its own: rule = app_id:foot iopacity 0.9
+# 1.0 is solid. a rule can set its own: rule = app_id:foot opacity 0.9
 opacity = 1.0
-opacity_unfocused = 1.0
+opacity_unfocused = 0.75
 # what shows behind an app's own see-through parts, e.g. a terminal with a
 # translucent background. auto is the frame colour; 00000000 shows the desktop.
 window_background = auto
@@ -230,19 +230,18 @@ resize_step = 0.04          # resize amount per keypress
 # exec        runs once on startup.
 # exec_always runs on startup AND on every config reload (doesn't kill old instances).
 # === environment ===
-exec = dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR
+exec = sh -c 'export QT_QPA_PLATFORMTHEME=KDE; dbus-update-activation-environment --systemd QT_QPA_PLATFORMTHEME; systemctl --user import-environment QT_QPA_PLATFORMTHEME'
+exec = dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR QT_QPA_PLATFORMTHEME
 
-exec = systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR
+exec = systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR QT_QPA_PLATFORMTHEME
 exec = ~/.config/aro/scripts/pywal-wallpaper
 
 # === autostart ===
 exec = ~/.config/aro/scripts/notifications
-exec = ~/.config/aro/scripts/wallpaper-watcher &
 exec_always = systemctl --user restart mpd
 
 
 # === window rules ===
-rule = app_id:kitty opacity 0.80 opacity_unfocused 0.80
 # rule = <match>... <action>...
 #
 # match:   app_id:<pattern>   title:<pattern>   type:<pattern>
@@ -314,7 +313,7 @@ rule = app_id:kitty opacity 0.80 opacity_unfocused 0.80
 # === keybindings ===
 
 # Terminal / launcher
-bind = mod+e, spawn, flatpak run org.kde.dolphin
+bind = mod+e, spawn, env QT_QPA_PLATFORMTHEME=KDE dolphin
 bind = mod+t, spawn, kitty
 bind = mod+d, spawn, rofi -show drun -theme ~/.config/rofi/launcher.rasi
 
