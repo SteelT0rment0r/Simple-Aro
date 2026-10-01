@@ -322,6 +322,7 @@ bind = mod+x, spawn, ~/.config/aro/scripts/rofi_powermenu
 bind = mod+n, spawn, ~/.config/aro/scripts/rofi_network
 bind = mod+b, spawn, ~/.config/aro/scripts/rofi_bluetooth
 bind = mod+shift+s, spawn, ~/.config/aro/scripts/rofi_screenshot
+bind = mod+p, spawn, ~/.config/aro/scripts/rofi_powerprofile
 
 # Window management
 bind = mod+q, close

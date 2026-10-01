@@ -36,7 +36,7 @@ The desktop comes with:
 * 🔊 volume slider directly in Waybar
 * 📶 Wi-Fi menu
 * 🟦 Bluetooth menu
-* ⏻ power menu
+* ⏻ power menu and power profile switcher
 * 📸 screenshot menu
 * 🎥 screen recording menu
 * 🔒 Hyprlock lock screen
@@ -74,6 +74,7 @@ So yeah, its meant to be an actual usable desktop rather than just an Aro config
 * `bluetoothctl`
 * `grim`
 * `slurp`
+* 'power-profiles-daemon'
 
 These handle things like:
 
@@ -84,6 +85,7 @@ These handle things like:
 * `bluetoothctl` → Bluetooth control
 * `grim` → screenshots
 * `slurp` → selecting an area for screenshots / recording
+* 'power-profiles-daemon'→ Switching between Power Saver, Balanced and Performance modes
 
 For audio, this setup expects a working PipeWire + WirePlumber setup.
 
