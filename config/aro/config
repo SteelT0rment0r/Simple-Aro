@@ -43,7 +43,7 @@ workspaces = 8
 
 # === keyboard ===
 # falls back to XKB_DEFAULT_* env vars if unset.
-keyboard_layout = tr
+keyboard_layout = us
 # keyboard_variant = nodeadkeys
 # keyboard_options = compose:ralt
 # keyboard_model =

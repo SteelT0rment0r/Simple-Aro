@@ -1,0 +1,20 @@
+#!/bin/sh
+
+current=$(powerprofilesctl get)
+
+case "$current" in
+    performance) prompt="Performance" ;;
+    balanced) prompt="Balanced" ;;
+    power-saver) prompt="Power Saver" ;;
+esac
+
+choice=$(printf 'Performance\nBalanced\nPower Saver' |
+    rofi -dmenu \
+    -p "Power Profile • $prompt" \
+    -theme ~/.config/rofi/powerprofile.rasi)
+
+case "$choice" in
+    Performance) powerprofilesctl set performance ;;
+    Balanced) powerprofilesctl set balanced ;;
+    "Power Saver") powerprofilesctl set power-saver ;;
+esac

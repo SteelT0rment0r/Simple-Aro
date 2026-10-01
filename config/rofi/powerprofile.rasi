@@ -1,0 +1,78 @@
+configuration {
+    show-icons: false;
+}
+
+@import "shared/colors.rasi"
+@import "shared/fonts.rasi"
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 520px;
+    border: 2px solid;
+    border-radius: 2px;
+    border-color: @selected;
+    background-color: @background;
+}
+
+mainbox {
+    spacing: 10px;
+    margin: 0px;
+    padding: 30px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing: 10px;
+    padding: 0px;
+    background-color: transparent;
+    text-color: @foreground;
+    children: [ "prompt" ];
+}
+
+prompt {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: @selected;
+    text-color: @background;
+}
+
+listview {
+    columns: 3;
+    lines: 1;
+    spacing: 10px;
+    layout: vertical;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+element {
+    padding: 20px 10px;
+    border: 1px solid;
+    border-radius: 8px;
+    border-color: @background-alt;
+    background-color: @background-alt;
+    text-color: @foreground;
+    cursor: pointer;
+}
+
+element-text {
+    font: "sans 12";
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+element selected.normal {
+    background-color: @selected;
+    border-color: @active;
+    text-color: @background;
+}
+
+element normal.normal {
+    background-color: @background-alt;
+    text-color: @foreground;
+}
